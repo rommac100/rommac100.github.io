@@ -36,6 +36,7 @@ Linux's support for multi monitor configurations has always been a bit bad. Some
 For now I have several scripts that solve most of my problems.
 [This repo](https://github.com/rommac100/monitor_scripts) contains the various scripts that I used to allow for quicker switches between my laptop and its "dock" setting.
 Effectively, I replace the .Xresource file and the i3config and change xrandr settings via the script on long from my login manager (lightdm). In theory, smarter way would to use a compare command and compare the file to be copied and the current file to see if they different to reduce the number of reads and writes (that will be added at some point). There are also some scripts that attempt to enable the Discrete GPU upon login as well but those are not working quite yet (located nvidia/ directory).
+*Note* currently there is a problem where it requires you to login twice( ie. login, exit, login again) in order to switch properly. This could be fixed somehow but I am unsure of the method as of now. 
 
 
 
