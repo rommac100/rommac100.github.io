@@ -3,12 +3,13 @@ description: "A jekyll theme inspired by linux consoles for hackers, developers 
 
 header_pages:
   - index.md
-  - peter.md
+  - vm.md
   - about.md
+  - contact.md
 
 style: dark
 
-footer: 'follow us on <a href="https://twitter.com/">twitter</a>'
+footer: 'visit my github for various scripts and flushed out projects <a href="https://github.com/rommac100">github</a>'
 
 # Build settings
 markdown: kramdown
