@@ -5,6 +5,7 @@ header_pages:
   - index.md
   - vm.md
   - about.md
+  - linux.md
   - contact.md
 
 style: dark
