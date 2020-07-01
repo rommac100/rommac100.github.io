@@ -3,6 +3,7 @@ layout: post
 title:  "Laptop Config"
 date:   2020-06-30
 tags: [linux, computers]
+post_url: /linux/2020-06-30-laptop-config
 ---
 
 # This page will be detailing most of the information that pertains to my current laptop config.
@@ -28,6 +29,6 @@ Current Software / Operating System Config:
 **i3** was chosen for the same reason as above with the addition that I typically avoid using the trackpad as much as possible due to the inefficiency of using a mouse. So i3 is the perfect WM to pair with the ideology. Also, the simplicity and customized ability of i3 is appreciated. 
 The editor **vim** I recently switched to due to a friend recommending that I switch to it after I convinced him to switch to **i3**. I could be happier with the decision as I already use terminal programs heavily (evidented by the website's theme choice) and vim pairs perfectly with this behaviour. There is definetly a bit of learning curve but if you force yourself to use it for nearly everything, you will get passed the curve quickly. However, that is just initial curve and there is a whole additional curve that beyond just being proficient with vim. I have not even gotten close to that curve.
 
-<a href=" 
-	
- 
+# Various issues I have had with the laptop (software & hardware): 
+[Issues & Solutions]({{ '/linux/2020-07-01-laptop-fixes' | relative_url }})
+
