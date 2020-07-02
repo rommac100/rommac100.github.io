@@ -1,29 +1,37 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
-date:   2020-06-30 18:05:08 -0700
-categories: jekyll update
+title:  "GPU Passthrough"
+date:   2020-07-01 
+tags: [computer, vm, passthrough]
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+# Synopsis
+ Effectively, GPU passthrough is a form of direct hardware passthrough or utilization to a given VM. The technology has been availble for quite a while in the enterpise sector but only recently did free/open source version began to exist.
+For most people, [QEMU](https://www.qemu.org/) should be used (especially if you are on Linux) for GPU passthrough as it has the best support for it at the moment and is the main open source Virtual Machine available on linux. For the purposes of the blog, I will be mostly looking at GPU passthrough for its uses in gaming but you can use GPU passthrough and in general direct hardware passthrough for many applications.
 
-Jekyll requires blog post files to be named according to the following format:
+# Outline of the Process
+	- Verification of Hardware Compatibility
+	- Pick Variant of GPU passthrough.
+	- Prepare machine for Passthrough.
+	- Prepare VM for passthrough.
+	- Tune.
+	- Enjoy! 
 
-`YEAR-MONTH-DAY-title.MARKUP`
+The above outline should give a general idea of what you will have to do in order to get GPU passthrough working. For some machines it will be super simple, others not so much.
 
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+Regardless of what distro you use, I highly suggest you look at the [Arch Wiki](https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF) as I will be referencing it heavily and it has best guide at the moment (beyond this one).
 
-Jekyll also offers powerful support for code snippets:
+# Related Posts:
+{% for post in site.posts %}
+  <ul>
+	{% if post.tags contains "passthrough" %}
+	<a href="{{ post.url }}">{{ post.title }}  -  {{ post.date | slice: 0, 10}}</a>
+	{% endif %}
+  </ul>
+{% endfor %}
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+# References:
+ - [https://www.qemu.org/](https://www.qemu.org/)
+ - [https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF](https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF)
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+

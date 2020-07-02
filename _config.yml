@@ -13,7 +13,9 @@ style: dark
 include:
   - "_images"
 
-footer: 'visit my github for various scripts and flushed out projects <a href="https://github.com/rommac100">github</a>'
+footer: 'visit my github for various scripts and flushed out projects <a href="https://github.com/rommac100">github</a>
+
+        All rights reserved unless specified otherwise'
 
 # Build settings
 markdown: kramdown
