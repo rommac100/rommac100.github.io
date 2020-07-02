@@ -29,6 +29,8 @@ Current Software / Operating System Config:
 **i3** was chosen for the same reason as above with the addition that I typically avoid using the trackpad as much as possible due to the inefficiency of using a mouse. So i3 is the perfect WM to pair with the ideology. Also, the simplicity and customized ability of i3 is appreciated. 
 The editor **vim** I recently switched to due to a friend recommending that I switch to it after I convinced him to switch to **i3**. I could be happier with the decision as I already use terminal programs heavily (evidented by the website's theme choice) and vim pairs perfectly with this behaviour. There is definetly a bit of learning curve but if you force yourself to use it for nearly everything, you will get passed the curve quickly. However, that is just initial curve and there is a whole additional curve that beyond just being proficient with vim. I have not even gotten close to that curve.
 
+# Picture of Example Setup
+<div style="text-align: center"><img src="/_images/linux/i3_desktop.png" alt="drawing" width="800" height="600"/></div>
 # Various issues I have had with the laptop (software & hardware): 
 [Issues & Solutions]({{ '/linux/2020-07-01-laptop-fixes' | relative_url }})
 

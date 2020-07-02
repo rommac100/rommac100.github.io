@@ -10,6 +10,9 @@ header_pages:
 
 style: dark
 
+include:
+  - "_images"
+
 footer: 'visit my github for various scripts and flushed out projects <a href="https://github.com/rommac100">github</a>'
 
 # Build settings

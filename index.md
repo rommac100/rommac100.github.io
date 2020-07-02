@@ -9,6 +9,8 @@ permalink: /
 
 Also expect some grammatical errors here and there as this blog is just meant to convey information rather stream of conscious like. Corrections will occur gradually.
 
+If there is information that you think should be updated. Just submit a pull request on github and I will make the changes. Or use my contact page if necessary.
+
 # Recently Added Pages
 <ul>
   {% for post in site.posts %}
