@@ -17,6 +17,7 @@ They also provide a decent SDK called [freedom-e-sdk](https://github.com/sifive/
 
 I however did not like the library and was wanting to program in bare metal assembly so I ignored their library for the most part and began my adventures into programming RISCV assembly.
 
+However, I did use their [toolchain](https://www.sifive.com/boards) for risc-v which I recommend you should download and compile and put it in an easily accessible location. Additionally, you should add the bin folder to your PATH environment variable.
 # Assembly Basics:
 If anyone isn't familiar with Assembly, I would suggest you look into some other articles on MIPS assembly as this article isn't necessarily meant for anyone who is trying to learn assembly. Rather it is meant for people who are trying to get assembly code to work on a bare metal RISC-V board. 
 
@@ -43,4 +44,63 @@ sw t1, 0x80(t0)   #Set green_led to output
 sw t1, 0x40(t0)   #Set GPIO output to have 1 = on, 0 to be off (or 1 =high, 0 = low)
 sw t1, 0x0C(t0)   #Turn on led
 ```
+
+You can use RISC-V simulators like Spike or a QEMU risc-v emulator to test the above code but I did not bother.
+
+One very important thing of note is you must create a memory map file so that the Assembler can make sure the variables go to the correct locations. I only discovered this after desperately searching for the reason why my hex file was not valid.
+
+```bash
+MEMORY
+{
+    rom : ORIGIN = 0x20010000, LENGTH = 0x1000
+    ram : ORIGIN = 0x80000000, LENGTH = 0x4000
+}
+SECTIONS
+{
+    .text : { *(.text*) } > rom
+    .rodata : { *(.rodata*) } > rom
+    .bss : { *(.bss*) } > ram
+}
+```
+
+If you read the above fe310 manual it becomes quite clear why the above file is needed.
+
+
+Next you have to create a Makefile that can compile the above assembly code and convert it to .hex file ( this needed to upload the code to the hifive).
+In my case after some searching I was able to piece meal a basic Makefile that could do everything that I needed.
+```bash
+# Makefile for Assembly Testing hifive1-revb
+# See Link for example makefile: https://github.com/dwelch67/sifive_samples/blob/master/hifive1b/blinker01/Makefile
+
+RISCVGNU = riscv32-unknown-elf
+
+AOPS = -march=rv32imac -mabi=ilp32 # Assembly compilation arugments
+
+all : led.o 
+
+clean :
+	rm -f *.o
+	rm -f *.elf
+	rm -f *.bin
+	rm -f *.list
+	rm -f *.hex
+
+led.o : led.S
+	$(RISCVGNU)-as $(AOPS) led.S -o led.o
+	$(RISCVGNU)-ld led.o -T memmap -o led.elf 
+	$(RISCVGNU)-objcopy led.elf -O ihex led.hex
+```
+
+Of course adjust the source filenames as needed, but it should output the desired hex file.
+
+The simplest part of all in the process is actually uploading the file. Just simply copy the file to the HiFive directory that has mostly likely been created as soon as your hifive1 was plugged into your computer, and it will go through the process of writing the hex file to memory.
+
+
+# Helpful Resources:
+- [fe310-datasheet](https://sifive.cdn.prismic.io/sifive%2F3d777659-a0dd-49ed-a011-5bebba17aecf_fe310-g002-ds.pdf)
+- [fe310-manual](https://sifive.cdn.prismic.io/sifive%2F9ecbb623-7c7f-4acc-966f-9bb10ecdb62e_fe310-g002.pdf)
+- [found_makefile](https://github.com/dwelch67/sifive_samples/blob/master/hifive1b/blinker01/Makefile)
+- [Sifive Hifive1 RevB](https://www.sifive.com/boards/hifive1-rev-b)
+- [freedom-e-sdk](https://github.com/sifive/freedom-e-sdk)
+- [toolchain](https://www.sifive.com/boards)
 
