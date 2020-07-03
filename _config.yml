@@ -7,6 +7,7 @@ header_pages:
   - about.md
   - linux.md
   - contact.md
+  - electronics.md
 
 style: dark
 

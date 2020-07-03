@@ -1,0 +1,46 @@
+---
+layout: post
+title:  "RISC-V Experimentation"
+date:   2020-07-03 
+tags: [electronics]
+---
+# General Info
+RISCV is a new ISA (instruction set architecture) that is supposed to be consised and simple. Supposedly it is more efficient than some other commonly used ISA (like x86, ARM64, etc) but I found it interesting at the very least and a great way to introduce myself to Assembly.
+
+# Getting Started:
+ In my case I purchased one of the development boards that are being sold by the RISC-V sister company SiFive. Specifically, the [Sifive Hifive1 RevB](https://www.sifive.com/boards/hifive1-rev-b) was purchased for around $50. 
+Not a bad little board and basically comes in the same form factor as an Arduino Uno.
+
+<img src="https://images.prismic.io/sifive/ddef5160-1769-4d8a-9332-99729088aff6_hifive-rev-b-home-page-new.jpg?auto=compress,format" width="50%" height="50%"/>
+
+They also provide a decent SDK called [freedom-e-sdk](https://github.com/sifive/freedom-e-sdk) which allows a user to code using C and with some basic assistance.
+
+I however did not like the library and was wanting to program in bare metal assembly so I ignored their library for the most part and began my adventures into programming RISCV assembly.
+
+# Assembly Basics:
+If anyone isn't familiar with Assembly, I would suggest you look into some other articles on MIPS assembly as this article isn't necessarily meant for anyone who is trying to learn assembly. Rather it is meant for people who are trying to get assembly code to work on a bare metal RISC-V board. 
+
+In any case, the RISCV Architecture has some interesting features in assembly. First of all, the x0 register is super useful as it is hard code to 0 so it useful for clearing out registers or for other operations. Secondly, a lot the opcodes have immediate versions which is useful as I have dealt with other languages where loading constants has been a little bit more cludgy.
+
+Beyond though few features, RISC-V assembly is fairly straight forward and doesn't have too many odd quarks.
+
+# Basic Assembly Test
+Lets say you are trying to turn on the RGB Led on the RISCV board and set it to GREEN. You would first have to look at the FE310 (the name of the chip on the hifive1-revb board) and look for the various registers and memory maps that are needed to do so. 
+
+*These articles I used to determine the various registers and memory address that I would need to do so.*
+[fe310-datasheet](https://sifive.cdn.prismic.io/sifive%2F3d777659-a0dd-49ed-a011-5bebba17aecf_fe310-g002-ds.pdf)
+[fe310-manual](https://sifive.cdn.prismic.io/sifive%2F9ecbb623-7c7f-4acc-966f-9bb10ecdb62e_fe310-g002.pdf).
+Both of these articles are useful in theory own ways but I found the manual far more helpful for my case. 
+
+Once you have pinpointed the addresses that are needed you should be able to come up with something like this.
+```assembly
+.global
+
+_start:
+li t0, 0x10012000 #Load gpio ctrl address
+li t1, 0x00080000 #Load green_led address
+sw t1, 0x80(t0)   #Set green_led to output
+sw t1, 0x40(t0)   #Set GPIO output to have 1 = on, 0 to be off (or 1 =high, 0 = low)
+sw t1, 0x0C(t0)   #Turn on led
+```
+
