@@ -9,6 +9,8 @@ Linux is an operating system that is typically best known for being particularly
 
 *Note* I won't be going into which distro or which DE (Desktop Environment) is the best as that is not entirely important. I will just be discussing the various problems I have had and my solutions or lack of solutions that I have had.
 
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Tux-simple.svg/2000px-Tux-simple.svg.png" width="50%" height="50%"/>
 # Recent Pages
 
 {% for post in site.posts %}

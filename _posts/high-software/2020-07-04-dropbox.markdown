@@ -1,0 +1,39 @@
+---
+layout: post
+title:  "Dropbox Issues and Solutions"
+date:   2020-07-04 
+tags: [software]
+permalink: /dropbox
+---
+# Synopsis of Dropbox
+Dropbox is best described as cloud syncing client/application. It should not be necessarily treated as "a server" that you still have store the files that are synced when using most versions of Dropbox. When it works it is quite a useful application but with large number of files being synced (i.e greater than 500,000) many issues start being present.
+
+# Stability Issues (mitigated)
+One of the main "things" you will notice when you begin to sync past the magic number of files limit (500,000), Dropbox will begin to be far more unstable and slow. They do mention this in the selective sync menu, however you are given very little feedback when some particular file is being particularlly problematic. For the most part, you can increase the stability of the application by performing smaller transfer (i.e less than  200,000 I have found to be fine). The cost to that though is that you will have to inconviently keep "feeding the queue" more often than before. It should also be noted that a small number of large files (i.e having a total of 100 GB and only 10-50 files) should not effect the stability of the client.
+
+# Recovery Procedure from Frequent Crashes
+From trial and error, I have someone determined a procedure for recovering a PC when Dropbox is constantly or frequently crashing.
+
+# Option 1 (Bullet-Proof)
+1. Kill all Dropbox Processes.
+2. Uninstall Dropbox using whatever preferred mean (just use Dropbox's uninstaller)
+3. Remove the folder containing all of your synced files. Typically this is present in your User folder.
+	- Windows: C:/Users/(your user)
+	- Linux: /home/(your user) 
+	- Mac: /home/(your user)
+	- *Note this should not move your files from the cloud bc the Dropbox client has already been uninstalled but stop if pop dropbox appears*
+4. Look at Dropbox's advance reinstall guide and remove basically and folder related to Dropbox. [Advance Reinstall](https://help.dropbox.com/installs-integrations/desktop/advanced-reinstall)
+5. Reinstall Dropbox and continue with your syncing of files
+ 	- You should slowly selective sync all of your files though if you have more than 500,000.
+
+The above guide should be bullet proof but for some people it may be over the top for their problem. 
+# Option 2 (Less good but quicker)
+1. Unlink your Dropbox account from the local client.
+2. Kill all Dropbox Processes. 
+3. Remove the folder containing all of your synced files. Typically this is present in your User folder.
+	- Windows: C:/Users/(your user)
+	- Linux: /home/(your user) 
+	- Mac: /home/(your user)
+	- *Note this should not move your files from the cloud bc the Dropbox client has already been uninstalled but stop if pop dropbox appears*
+4. Re-link your account and begin re-syncing your files.
+ 	- You should slowly selective sync all of your files though if you have more than 500,000.
