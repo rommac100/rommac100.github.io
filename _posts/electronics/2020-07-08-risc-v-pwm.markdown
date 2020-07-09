@@ -50,10 +50,81 @@ Here the diagram assumes our pwms increments from 0 to 6 and shows the various o
 *Firstly, I will only be going over the bits in this register that are needed for a simple pwm output, if you wish to do anything more complicated I would recommend you read over the various datasheets that are linked in this article*
 
 <img src="/_images/electronics/riscv/pwmconf.png" width="75%" height="75%"/>
+Bits [3:0] corresponded to the scaling factor for the pwmcounter to pwmscounter. Keep in mind this takes the input clock and divides i by 2^pwmscale. So if [3:0] = 0010, then your input clock will be divided by 2^2.
 
+Bit 9 is an interesting bit. It allows you to have four first pwm comparator establish period of the signal instead of using the pwms solely. I.e when the pwmcmp0 has value set, and the pwms equals that value or is greater, the pwms, and pwmcounter are reset. At the cost of one less pwm output, there is the possibility of increasing the options of PWM Frequencies. *Note you can also just adjust the input frequency for the entire PWM generation instead in order to get a specific frequency but I won't be describing how to do so in this article. Look in the fe310-manual for information on it* 
+   
+Bit 12 should be set 1 so that the pwm signal is continously generated.
+Bit 13 is useful if you want to send a signal pulse instead of continuously output the pwm signal. Not needed for a our simple output so leave it to 0.
+The rest of the bits I won't go into but they do interesting things like interrupts, centering of the signal, etc.
+For a simple test the pwmcfg can be assigned *0x00001002* which equates to a pwmscale of 2, and the pwmenalways being set to 1.
+   
+# PWM Compare Registers.
+For each of the compare registers the usable size will be either 16 or 8 bits ( depending on the pwm instance that is used). Effectively, assign the duty cycle to each of these registers but do some minor conversions. In our example for a 50% duty cycle, a value of *0x7FFF* will suffice.
 
+# GPIO IOF
+Since most of the GPIOs have multiple functions beyond being just simple In and Outs, the user has to specifically specify whether or not they want to use one of the addtional functions using the GPIO IOF Registers.
 
+<img src="/_images/electronics/riscv/gpioioftbl.png" width="75%" height="75%"/>
 
+Here the two right columns specify the additional functions that a pin may have assigned to it.
+To utilize those functions, use these register offsets off of the base GPIO CTRL address
+*0x038 - for GPIO IOF enable*
+*0x03C - for which iof function*
+
+For the purposes of this example, I will be using gpio pin 19, so I effectively have to enable iof and set it to iof1 for that pin:
+    
+```assembly
+li t0, 0x10012000 # Base GPIO CTRL Address
+li t1, 0x1
+SLLI t1, t1, 0x13 # set correct bit to correspond to gpio 19
+sw t1, 0x038(t0) # set IOF to be enable for that pin
+sw t1, 0x03C(t0) # set IOF select to 1 for second function (i.e pwm function)
+```
+
+# Issuing Basic pwm signal:
+So combinding everything so far and adding some clears for the important registers:
+{% highlight assembly linenos %}
+_pwmEn:
+	addi sp, sp, -16 # move back store pointer to ad return address to the stack
+	sw ra, 12(sp) # store return address to the stack
+	li t3, GPIO_LED_ADDR
+	li t2, GPIO_CTRL_ADDR
+	li t0, PWM1_BASE # Store default ctrl address for pwm0
+	li t1, 0x00001002 # Set pwmscale = 2,pwmalways=1
+	sw x0, PWMCFG(t0)
+	sw x0, PWMCMP0(t0)
+	sw x0, PWMCMP1(t0)
+	sw x0, PWMCMP2(t0)
+	sw x0, PWMCMP3(t0)
+	sw x0, PWMSCALE(t0)
+	sw x0, PWMCOUNT(t0)
+	sw t1, PWMCFG(t0) # Set frequency to roughly 1khz, continously send
+	li t1, 0x1FFF # setting duty cycle to 50%
+	sw t1, PWMCMP1(t0)
+	sw x0, PWMCOUNT(t0)
+	sw t3, GPIO_IOF_OFFSET_EN(t2)
+	sw t3, GPIO_IOF_OFFSET_SEL(t2)
+	
+exit_pwm:
+	lw ra, 12(sp)
+	addi sp, sp, 16
+	ret
+{% endhighlight %}
+
+# Breaking down the above code
+Lines 1 and two are just for call purposes (i.e storing ra into the stack for safe keeping).
+Lines 4,5 are just stardard load for getting the various constants associated with the GPIO.
+Line 6 is effectively the same as above but for the PWM Instance1 instead of the GPIO Instance.
+Line 7 is for loading our defined pwm config (pwm always, and pwmscale =2)
+Lines 8 through 14 are for the precaution of zeroing all critical pwm registers.
+Line 15 is for actually storing the previously loaded pwm config.
+Line 16 loads the desired 50% duty cycle into a register.
+Line 17 stores the duty cycle for our GPIO 19
+Line 18 rezeros the pwmcount register just incase it has incremented already.
+Lines 19 and 20 are for setting the correct IOF settings for GPIO 19
+
+Lines 22 through 25 are just standard exist and return instructions
 
 
 
