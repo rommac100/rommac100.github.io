@@ -1,0 +1,67 @@
+---
+layout: post
+title:  "RISC-V Hifive1 PWM"
+date:   2020-07-08
+tags: [electronics]
+---
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+# PWM Concept
+Pulse Width Modulation is a popular and very commonway of reducing the average voltage. Simply put, it typically involves setting a Vout to oscillate between 0v and Vcc (or someother fixed voltage) at a fixed period and a fixed Duty Cycle. This of course with enough smoothing can produce a very clean signal but for the most part the oscillation alone will work fine for a lot electronic devices. Common usages of PWM are: controlling the speed of a DC motor, dimming an LED or any application that involves "faking" analog outputs.
+
+# PWM Frequency
+Depending on your application, you may want a high or low PWM frequency. For the process of dimming an led using PWM, frequency of 1Khzcould potentially be fine if you are dealing with just human vision (cameras may need higher frequencies to produce a similar diming effect). Other process such as Buck and boost converters, you may need higher frequencies to produce usable average voltages.
+
+# Duty Cycle:
+The duty cycle of PWM signal is typically defined as the On Time over the the total Period time. Or effectively, the percentage of on or the percentage of your original voltage.
+# Example PWM 
+Lets say we want a 500 khz clock with a duty cycle of 50% the signal would resemble something like this:
+<img src="/_images/electronics/riscv/pwm50.png"/>
+See how the ontime of 1 us over the total period of 2us equates to the 50% duty cycle.
+Now for 500 khz clock with duty cyle of 20%
+<img src="/_images/electronics/riscv/pwm20.png"/>
+And at 500 khz your average voltage produce by the pwm signal should be pretty usable for most applications and would produce 50% of your original Vcc in the first signal, and 20% of your original Vcc for the second signal.
+
+# RISC-V Builtin PWM Generation (work in-progress)
+Since I just got it working I figured I would write up the process I used to get usable PWM signals from the Hifive1 rev b development board.
+
+# Overview of PWM Register.
+I will try to go into the Register as much as possible, but I still highlighly recommend that you look through the datasheets at the bottom of the article, some very useful information is present in the various documents.
+
+Regardless, the PWM Generation system consists of 3 different separate PWM instances and each of these instances can support four different PWM pins with independent duty cycles. Keep in mind these 3 different instance can have different PWM frequencies but the actual actual individual outputs cannot have different frequencies. Additionally, each pin on the the Hifive1 board has already had a pwm instance if the pins supports the PWM generation system at all. See the the Resources below to determine which pins correlated to which instance and output.
+Example:
+PWM Instance 0 is assigned a frequency of 16 mhz, Output 0, 1, 2, 3 can have any duty cycle assigned to them.
+
+# PWM Instances and Addresses
+<img src="/_images/electronics/riscv/pwminst.png"/>
+
+*Note that the first PWM instance is the least accurate as it has the lowest resolution of the 3 instances*
+
+# Outline of Memory for Each PWM Instance
+<img src="/_images/electronics/riscv/pwmmem.png" width="75%" height="75%"/>
+The above Memory map outlines the various locations for each of the revelent registers for each PWM Instance. 
+
+# General description of PWM generation in the Hifive
+Effectively, how the generation works is that there is a 32 bit counter (*pwmcount*) that increments based upon a predefined clock. This counter can then be scaled using the pwmcfg register and outputed to the scaled pwm counte register (*pwms*). This output is then compared to the four compare registers. In the basic not highest accuracy mode of generation, each pwmcmp register (pwmcmp0-3) correspondes to the four outputs of the pwm instance and will raise the output to high when the pwms has exceed some 16 bit or 8 bit value that is stored in a pwmcmp register. The below digram from SiFive makes this concept quite clear.
+
+<img src="/_images/electronics/riscv/pwmwave.png" width="75%" height="75%"/>
+Here the diagram assumes our pwms increments from 0 to 6 and shows the various outputs given a set pwmcmp. So if you wanted a 50% duty cycle you would set the pwmcmp to be 3. This method is a bit counter-intuitive as to get 25% duty cycle you have to set pwmcmp to be equal to 6 but this logic can be inverted using some of the GPIO output registers.
+
+# PWM Configuration Register
+*Firstly, I will only be going over the bits in this register that are needed for a simple pwm output, if you wish to do anything more complicated I would recommend you read over the various datasheets that are linked in this article*
+
+<img src="/_images/electronics/riscv/pwmconf.png" width="75%" height="75%"/>
+
+
+
+
+
+
+
+# Helpful Resources:
+- [fe310-datasheet](https://sifive.cdn.prismic.io/sifive%2F3d777659-a0dd-49ed-a011-5bebba17aecf_fe310-g002-ds.pdf)
+- [fe310-manual](https://sifive.cdn.prismic.io/sifive%2F9ecbb623-7c7f-4acc-966f-9bb10ecdb62e_fe310-g002.pdf)
+- [found_makefile](https://github.com/dwelch67/sifive_samples/blob/master/hifive1b/blinker01/Makefile)
+- [Sifive Hifive1 RevB](https://www.sifive.com/boards/hifive1-rev-b)
+- [freedom-e-sdk](https://github.com/sifive/freedom-e-sdk)
+- [toolchain](https://www.sifive.com/boards)
+
