@@ -103,4 +103,5 @@ The simplest part of all in the process is actually uploading the file. Just sim
 - [Sifive Hifive1 RevB](https://www.sifive.com/boards/hifive1-rev-b)
 - [freedom-e-sdk](https://github.com/sifive/freedom-e-sdk)
 - [toolchain](https://www.sifive.com/boards)
+- [bare-metal](https://wiki.osdev.org/HiFive-1_Bare_Bones)
 

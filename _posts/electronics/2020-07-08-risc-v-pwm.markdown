@@ -126,7 +126,40 @@ Lines 19 and 20 are for setting the correct IOF settings for GPIO 19
 
 Lines 22 through 25 are just standard exist and return instructions
 
+# Alternative PWM Generation
+As mentioned above, you can also use the pwmcmp0 for each instance to set the period of the pwm signal at the cost of loosing one pwm output. 
+Also not that you have the to make the appropriate change to the pwmcfg register, (i.e set bit 9 to 1 to enable this functionality)
+The above code is modified below to support a 50% duty cycle and *0xFFFF* written to the pwmcmp0 so that it resets the pwm counter after *0xFFFF* counts.
 
+{% highlight assembly linenos %}
+_pwmEn:
+	addi sp, sp, -16 # move back store pointer to ad return address to the stack
+	sw ra, 12(sp) # store return address to the stack
+	li t3, GPIO_LED_ADDR
+	li t2, GPIO_CTRL_ADDR
+	li t0, PWM1_BASE # Store default ctrl address for pwm0
+	li t1, 0x00001202 # Set pwmscale = F, pwmalways=1
+	sw x0, PWMCFG(t0)
+	sw x0, PWMCMP0(t0)
+	sw x0, PWMCMP1(t0)
+	sw x0, PWMCMP2(t0)
+	sw x0, PWMCMP3(t0)
+	sw x0, PWMSCALE(t0)
+	sw x0, PWMCOUNT(t0)
+	sw t1, PWMCFG(t0) # Set frequency to roughly 1khz, continously send
+	li t1, 0xFFFF
+	sw t1, PWMCMP0(t0)
+	li t1, 0x7FFF # setting duty cycle to 25%
+	sw t1, PWMCMP1(t0)
+	sw t3, GPIO_IOF_OFFSET_EN(t2)
+	sw t3, GPIO_IOF_OFFSET_SEL(t2)
+	sw x0, PWMCOUNT(t0)
+	
+exit_pwm:
+	lw ra, 12(sp)
+	addi sp, sp, 16
+	ret
+{% endhighlight %}
 
 # Helpful Resources:
 - [fe310-datasheet](https://sifive.cdn.prismic.io/sifive%2F3d777659-a0dd-49ed-a011-5bebba17aecf_fe310-g002-ds.pdf)
@@ -135,4 +168,6 @@ Lines 22 through 25 are just standard exist and return instructions
 - [Sifive Hifive1 RevB](https://www.sifive.com/boards/hifive1-rev-b)
 - [freedom-e-sdk](https://github.com/sifive/freedom-e-sdk)
 - [toolchain](https://www.sifive.com/boards)
+- [repo](https://github.com/rommac100/assembly_testing_riscv)
+- [bare-metal-tut](https://wiki.osdev.org/HiFive-1_Bare_Bones)
 
