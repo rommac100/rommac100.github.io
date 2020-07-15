@@ -76,9 +76,21 @@ NET  c     LOC = W21  | IOSTANDARD=LVCMOS25;
 These two pieces of code should allow for the project to implement correctly with some minor complaints about the clock.
 
 # Programming ZC706
+*Note you should plug in the two usb cables for the zc706 and set the boot parametes (using the light blue dip switches) so that 4 is low and the rest are high*
 Firstly, I would highlighly suggest that you look at the arch wiki article on the ISE ide as some modifications are needed to get the uploading procedure to work properly. Specifically, look at the sections that detail the Xilinx Jtag, and the Digilent Jtag. Also I used the newer of the two fxload libraries (fxload-libusb) but I am not entirely sure if it makes a difference.
 Once the pre-reqs have been taken care of, Generate the Programming file with the default parameters.
 <img src="/_images/electronics/zc706/gen_program.png" />
+
+Once that has completed successfully (without severe warnings and errors), open up the 'Configure Target Device' Menu.
+<img src="/_images/electronics/zc706/conf_target.png"/>
+
+The Configure Target Device Window should open. 
+<img src="/_images/electronics/zc706/target_window.png"/>
+In that window, you first have to do a boundary scan, that will allow you to then right click on the white portion of the window and add a Xilinx Device. A new window should pop up and you just have to specify the output programming file (should already be automatically directed to your recently created file).
+
+Once it has succesfully loaded the file, you should be able to either right click on the 'package' and hit program or use the cable auto-connect button and a secondary menu should pop up verifying that the zc706 showed up. Hit okay and it should start programming the device (a light blue 'Program Succeeded' should pop up upon succesful completition).
+
+
 
 
 
