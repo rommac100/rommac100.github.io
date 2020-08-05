@@ -2,6 +2,7 @@
 layout: post
 title:  "RISC-V Hifive1 PWM"
 date:   2020-07-08
+post_url: /electronics/riscv-pwm
 tags: [electronics]
 ---
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>

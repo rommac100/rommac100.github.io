@@ -1,0 +1,56 @@
+---
+layout: post
+title:  "Z80 Computer Project"
+date:   2020-07-26 
+post_url: /electronics/z80_proj
+tags: [electronics]
+---
+# General Info
+This project will involve creating a computer using a Z80 CPU and various other modern and older pieces of hardware. In the final product it would be nice to have an actual display and keyboard interface of some form.
+
+# Why do this
+Quite frankly, you really begin to understand computers if you work with one this old and simple. Being able to physically analyze the address lines, data lines and ctrl signals really helps with understanding computers as a whole.
+Also it is a good project to collaborate with as there are a lot of sub modules that need to be worked on.
+
+# Current Hardware
+ - Z80 CPU @ 6 MHZ [Z84C0006PEG](https://www.digikey.com/product-detail/en/zilog/Z84C0006PEG/269-3892-ND/929204)
+ - 256K EEPROM [AT28C256](https://www.digikey.com/product-detail/en/microchip-technology/AT28C256-15PU/AT28C256-15PU-ND/1008506)
+ - 256M SRAM [CY62256NLL](https://www.digikey.com/product-detail/en/alliance-memory-inc/CY62256NLL-70PXC/1450-1480-ND/9825435)
+
+# Main Schematic for the base Hardware setup:
+<img src="/_images/electronics/z80/schematic.png" width="95%" height="95%"/>
+Effectively, the above schematic describes the basics needed for a simple computer. A reset system, a clock generation, and a CPU, ROM and RAM are all present in the above schematic.
+
+# IO Expander:
+Given that IO expanders are bit more difficult to get for the z80, I decided to rig up an older arduino to be used as an expander. 
+For now, an arduino uno was selected which does limit the number of address lines but this will be addressed eventually when I switch the expander over to a Arduino Mega.
+
+# Schematic for IO Expander
+
+<img src="/_images/electronics/z80/schematic_io.png" width="95%" height="95%"/>
+This schematic just gives an idea of how the io expander is currently hooked up to the rest of the CPU. 
+
+# Function of the IO Expander
+In the link Z80 Datasheet, it gives a good idea of the timing diagram for IO Read or Write. Regardless of which state of IO interaction, the interaction is started by a falling_edge of the IORQ so the Arduino uno uses this as a interrupt in order to start sequence. Also it should be noted that the clocks are not synced between the Uno and Z80 so this could cause some problems later on but for simple IO interactions it should be fine given that the arduino should almost always finish before the end of the IO Cycle.
+
+# IO Timing Diagram
+<img src="/_images/electronics/z80/timing_io.png" width="95%" height="95%"/>
+
+
+
+
+
+# Helpful Resources:
+Datasheets:
+ -  [Z84C0006PEG](https://www.digikey.com/product-detail/en/zilog/Z84C0006PEG/269-3892-ND/929204)
+ -  [AT28C256](https://www.digikey.com/product-detail/en/microchip-technology/AT28C256-15PU/AT28C256-15PU-ND/1008506)
+ -  [CY62256NLL](https://www.digikey.com/product-detail/en/alliance-memory-inc/CY62256NLL-70PXC/1450-1480-ND/9825435)
+<h1> </h1>
+Misc:
+ - [Programming Z80 Manual](http://www.z80.info/zip/programming_the_z80_3rd_edition.pdf)
+<h1> </h1>
+Repos:
+ - [base_project_repo](https://github.com/been-jamming/MMC80)
+
+
+
