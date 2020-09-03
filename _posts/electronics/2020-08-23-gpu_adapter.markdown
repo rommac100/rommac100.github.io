@@ -10,6 +10,11 @@ The goal of this adapter is to convert the stacked DVI connector (i.e two dvi co
 ** Stacked DVI Connector **
 <img src="https://c1.neweggimages.com/NeweggImage/ProductImageCompressAll1280/14-487-075_R01.jpg" width="90%" height="90%"/>
 
+# PCB Revisions
+ - Rev 1 (untested)
+<img src="/_images/electronics/gpu_mods/pcbv1.png" width="90%" height="90%"/>
+
+
 # Removing Old Connector
 While I was waiting for the pcb to arrive/while I was designing, I started the process of removing the connector from the gpu. 
 I first attempted to using a solder sucker and a quality solder iron, this turned out to be a bad decision due the multi layer design of basically all gpus (too much heat is required and too easy to disipate the heat). This basically meant that sucking would never work properly. I also tried using solder wick but I found it to not work not that great either (though I could be just a novice at using solder wick as I only recently started using it after finding a brand that was not horrible).
