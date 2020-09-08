@@ -1,14 +1,16 @@
 ---
 layout: post
-title:  "Using Openvpn cloud to bypass Carrier NATs"
+title:  "OpenVPN Cloud VPS - Using OpenVPN cloud to bypass Carrier-grade NATs"
 date:   2020-09-07
 tags: [computer, vm, containers]
 ---
 # Synopsis
- So lets say you just setup a nice new homeserver with potentially a plex media server. You now wish to access this media but sadly you have [Carrier-grade NAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT). Realistically, the only solution you have is to host a vpn server somewhere remotely and have you network connect to that vpn in order to access your media. There are plenty of services to use do to this (realistically you just need a remote server with port forwarding capabilites) but I ended up going with [Openvpn Cloud](https://openvpn.net/cloud-vpn/) as it is free with no bandwith caps at the cost of only having 3 active connections allowed. However, you could setup multiple accounts if you wish to bypass the 3 connections limit.
-
-# Openvpn Cloud Setup
- Once you have made an account and have arrived at the vpn web interface 
+ So lets say you just setup a nice new homeserver with a plex media server. You now wish to access this media but sadly you have [Carrier-grade NAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT) and you don't wish to have your bandwidth capped by plex's proxy servers. Or maybe, you wish to just remotely managed your server but cannot setup a local vpn server because of your Carrier's Nat. Realistically, the only solution you have is to host a vpn server somewhere remotely and have you network connect to that vpn in order to access your media. There are plenty of services to use do to this (realistically you just need a remote server with port forwarding capabilites) but I ended up going with [OpenVPN Cloud](https://openvpn.net/cloud-vpn/) as it is free with no bandwidth caps at the cost of only having 3 active connections allowed. However, you could setup multiple accounts if you wish to bypass the 3 connections limit.
+<a/>
+NOTE: I am not sponsored by Openvpn (though this should be pretty obvious given that the above statement is present)
+<a/>
+# OpenVPN Cloud Setup
+ Once you have made an account and have arrived at the VPN Admin Portal.
  <img src="/_images/vm/openvpn/openvpn-admin.png" width="90%" height="90%"/>
  Make a couple of devices under user section.
  <img src="/_images/vm/openvpn/openvpn-devices.png" width="90%" height="90%"/>
@@ -17,7 +19,7 @@ tags: [computer, vm, containers]
  Here you will have to make a new network. Give it a name, a network subnet (which can be realistically anything in the scenario), enable split tunnel and enable VPN Egress if you want to be able to access the outside internet besides your tunnelled network.
  Then you will need to add a connector.
  <img src="/_images/vm/openvpn/openvpn-network.png" width="90%" height="90%"/>
- Give it a connector name and select the closets vpn region to your location.
+ Give it a connector name and select a the nearest region.
  You will also want to download the .ovpn file associated with this connector by clicking the download button (to the right of the pencil icon).
  Before proceeding to setting up your connector, I would recommend downloading a .ovpn profile for one of your previously created devices and test that you can tunnel correctly (go back to users and click the same download button as the connectors download but for the device you want).
 
@@ -27,6 +29,11 @@ If you are using openvpn2 use the following command:
 ```bash
 # openvpn --config <insert config file>
 ```
+If you are using openvepn3 use the following command:
+```bash
+# openvpn3 session-start --config <insert config file>
+```
+*Note - You may not need to execute the above commands with root privileges if you setup your permissions correctly.*
 if you are able to establish a tunnel then you should be able to continue with setting up your connector.
 
 # Setting Connector - Linux
@@ -96,9 +103,14 @@ Note that you can change the ip address if needed. Once you have updated you ipt
 <a/> 
 An easy way to verify that it is working is simply ping your routers gateway while tunnelling through your vpn server (I mostly use my phone when testing this so that I fully verify that all of my packets are going through a remote network).
 
-
+# Additional Notes
+There may be more secure ways of doing this but this was a quick and dirty guide of setting up a VPS server using OpenVPN's Cloud service.
 
 
 # References:
-- [lxc-proxmox](https://pve.proxmox.com/wiki/Linux_Container) 
-
+ - [openvpn article](https://openvpn.net/cloud-docs/connecting-networks-to-openvpn-cloud-using-connectors-2/)
+ - [Carrier-grade NAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT)
+ - [OpenVPN Cloud](https://openvpn.net/cloud-vpn/)
+ - [ipv4 routing](https://geek-university.com/linux/ip-forwarding/)
+ - [iptables man page](https://linux.die.net/man/8/iptables)
+ - [ufw man page](http://manpages.ubuntu.com/manpages/bionic/man8/ufw.8.html)
