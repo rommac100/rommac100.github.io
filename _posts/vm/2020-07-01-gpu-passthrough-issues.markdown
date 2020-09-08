@@ -64,6 +64,9 @@ Then navigate to the closing devices tag and insert the following code
 The above changes should get audio working for the most part and are tested to a certain extent. 
 *Note* Recently in QEMU 4.0/4.2 there have been some new audio changes that have improve pulseaudio passthrough. I haven't tested them but Arch wiki discuss what is necessary. I will added them to this guide once they have been tested.
 
+# Identical Vendor IDs
+ Since virtio requires vendor ids in order to properly passthrough, two or more gpus with identical ids posses a problem. The Arch wiki on gpu passthrough (the gospel at this point) does provide a solution by adding a script that manually binds gpus to the virtio driver via a pci address (like 0000:00:02.0). However, this guide does not perfectly translate to other distros where mkinitcpio is present (which in this solution is somewhat necessary in order to bind early enough). I have yet to test a way to do it on other distros but I can confirm that this solution does work on the one system where it was necessary. Will update once I have tested it on at least debian.
+
 
 ## References:
  - [https://www.qemu.org/](https://www.qemu.org/)
