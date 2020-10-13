@@ -105,6 +105,8 @@ An easy way to verify that it is working is simply ping your routers gateway whi
 
 # Additional Notes
 There may be more secure ways of doing this but this was a quick and dirty guide of setting up a VPS server using OpenVPN's Cloud service.
+*Also note that there is alternative to this using some software provided by Openvpn. That method is easier to setup but does not necessarily work on every platform and you cannot customize it as much. See the below link for more details.*
+ - [openvpn connector package](https://openvpn.net/vpn-server-resources/finishing-configuration-of-access-server/)
 
 
 # References:
