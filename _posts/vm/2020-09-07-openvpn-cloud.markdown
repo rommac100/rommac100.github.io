@@ -48,7 +48,7 @@ This [openvpn article](https://openvpn.net/cloud-docs/connecting-networks-to-ope
 3. Setup a NAT for the machine.
 
 # VPN Connection
-As described in the *Quick and Dity method for testing a ovpn file*, you can simply use the openvpn command to connect your cloud vpn but in order to have it autostart and run in the background there are a couple of options Create Service that runs the openvpn connectionor utilize openvpn's builtin autoconnection. The second option involves moving your ovpn file into a specified directory and when openvpn service starts it will autoconnect to your vpn server. In my case, I was having problems where the openvpn autoconnection would try to connect to the vpn server twos times which would remove an excess amount of vpn connections from already limited connection amount. So I ended up making a simple .service file which is run using systemd
+As described in the *Quick and Dity method for testing a ovpn file*, you can simply use the openvpn command to connect your cloud vpn but in order to have it autostart and run in the background there are a couple of options on how to do so. Firstly, you can create a .service file that will create service for the openvpn connection. The second option involves moving your ovpn file into a specified directory and when openvpn service starts it will autoconnect to your vpn server. In my case, I was having problems where the openvpn autoconnection would try to connect to the vpn server twos times which would remove an excess amount of vpn connections from already limited connection amount. So I ended up making a simple .service file which is run using systemd
 
 ```bash
 [Unit]
