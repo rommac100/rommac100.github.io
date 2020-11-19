@@ -42,6 +42,12 @@ It is possible to setup a connector on Windows or on a Mac, but it would be way 
 In my case, I will be having my connector in a LXC Debian 10 container but regardless of how you setup your connector make sure that its local ip address in on the same subnet as the rest of the network that you want to access.
 <a/>
 
+*Note*
+One additional item that is needed for an lxc container is for a bind of the "/dev/net/ file between the host machine and the container. The below config addition should work fine for at least an lxc container hosted on proxmox machine (but I would imagine it would work with a variety of other setups).
+```bash
+lxc.mount.entry: /dev/net dev/net none bind,create=dir
+```
+
 This [openvpn article](https://openvpn.net/cloud-docs/connecting-networks-to-openvpn-cloud-using-connectors-2/) gives a good amount of the information that I will be referencing in the rest of the article. But there are effectively 3 things you have to setup on your linuxconnector machine:
 1. Setup vpn connection using various methods (.ovpn file, connector application, etc.)
 2. Enable ipv4 routing
@@ -108,6 +114,14 @@ There may be more secure ways of doing this but this was a quick and dirty guide
 *Also note that there is alternative to this using some software provided by Openvpn. That method is easier to setup but does not necessarily work on every platform and you cannot customize it as much. See the below link for more details.*
  - [openvpn connector package](https://openvpn.net/vpn-server-resources/finishing-configuration-of-access-server/)
 
+# Potential Fixes for problems
+<a/>
+Some people have pointed out that certain vpn files throw errors when setting up their vpn connection. The below config entries (place in your .ovpn file) should solve any issues with ipv6 related issues. (Suggestion made by [Jellayy](https://github.com/Jellayy)).
+<a/>
+```bash
+pull-filter ignore "ifconfig-ipv6 "
+pull-filter ignore "route-ipv6 "
+```
 
 # References:
  - [openvpn article](https://openvpn.net/cloud-docs/connecting-networks-to-openvpn-cloud-using-connectors-2/)
