@@ -24,6 +24,7 @@ Firstly, I made a couple of scripts that make the pia scripts work without conso
 
 # Connect to server and enable port forwarding script
 *Note that you will want to change the cd directory so that it matches the root directory of your pia cloned repo*
+<a/>
 "connect_vpn.sh"
 ``` bash
 #!/bin/bash
@@ -42,87 +43,29 @@ else
         /bin/bash /home/theatre/.scripts/manual-connections/get_region_and_token.sh
 fi
 ```
-Obviously, you should isnert your private internet access username and password where applicable.
+Obviously, you should insert your private internet access username and password where applicable.
 
-# Nginx Reverse proxy setup
-So I just have a very simple reverse proxy setup in nginx which just takes the given pia port and forwards the traffic from the plex server. Replace the parameters *proxy_pass* and *listen* with the appropiate values (i.e correct local ip address for pia and the correct pia vpn port).
+# Routing the opened port to Plex
+ So by default the Manual selection of Plex's public port doesn't work with this setup unless we use either iptables or ufw to route the ports slightly.
 <a/>
-"nginx.conf"
+"port_update.sh"
 ``` bash
-user www-data;
-worker_processes auto;
-pid /run/nginx.pid;
-include /etc/nginx/modules-enabled/*.conf;
-
-events {
-        worker_connections 768;
-        # multi_accept on;
-}
-
-http {
-
-  server {
-    listen 26557;
-    location /{
-      proxy_pass http://192.168.12.8:32400;
-    }
-  }
-        ##
-        # Basic Settings
-        ##
-
-        sendfile on;
-        tcp_nopush on;
-        tcp_nodelay on;
-        keepalive_timeout 65;
-        types_hash_max_size 2048;
-        # server_tokens off;
-
-        # server_names_hash_bucket_size 64;
-        # server_name_in_redirect off;
-
-        include /etc/nginx/mime.types;
-        default_type application/octet-stream;
-
-        ##
-        # SSL Settings
-        ##
-
-        ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
-        ssl_prefer_server_ciphers on;
-
-        ##
-        # Logging Settings
-        ##
-
-        access_log /var/log/nginx/access.log;
-        error_log /var/log/nginx/error.log;
-
-        ##
-        # Gzip Settings
-        ##
-
-        gzip on;
-
-        # gzip_vary on;
-        # gzip_proxied any;
-        # gzip_comp_level 6;
-        # gzip_buffers 16 8k;
-        # gzip_http_version 1.1;
-        # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-
-        ##
-        # Virtual Host Configs
-        ##
-
-        include /etc/nginx/conf.d/*.conf;
-        include /etc/nginx/sites-enabled/*;
-}
+#!/bin/bash
+systemctl stop plexmediaserver.service
+cd /home/theatre/.scripts/manual-connections
+port=$(cat port_pia)
+iptables -t nat -A PREROUTING -i tun06 -p tcp --dport $port -j REDIRECT --to-port 32400
+sed -i 's/\(ManualPortMappingPort=\)"[0-9]\+\(\.[0-9]\+\)\?"/\1"'"$port"'"/' "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Preferences.xml"
+systemctl start plexmediaserver.service
 ```
-At this point, the setup should be working and you should be able to access your plex server remotely without bandwidth limitations.
+This past script does several things. First, it stops plexmediaserver using systemd. Next it grabs PIA's allocate port and uses iptables to forward traffic from tun06 with that port to local port of 32400 (plex's favorite port). Then it we manually update the Plex's Manual Port Mapping entry to match the newly received port from PIA. Plex then can be start up again.
+<a/>
+*Note that you may have to change some of the paths so that they match where your clone PIA repo is located and so that your Plex Preferences Path is correct. [Plex Config Locations](https://support.plex.tv/articles/202915258-where-is-the-plex-media-server-data-directory-located/)*
+<a/>
+If both of scripts work accordingly, then you can go ahead and proceed with automation aspect. 
 
 # Automating the setup with Systemd
-If the server were to stop at any point, you would have restart the pia portforwarding, the vpn connection, and update the nginx port. This is obviously time consuming, so setting up some basic systemd services will allow the setup to be fully automated (with the exception of grabbing the port and public ip for external use as this obviously cannot really be automated).
+If you ever had to restart the server, you would have to re-run the above scripts which can be a bit annoying. To solve this, there are two systemd services that connect to PIA and enable portforwarding, and then fix the traffic routing of the open port.
 
 # Modifying the pia repo
 There are a couple changes that need to be done to get this automation working. Firstly, we need to store the pia port somewhere so that the nginx port can be updated. Secondly, the session id needs to stored so that the vpn connection can be killed properly via systemd. In both cases, I just export the numbers to two files (and delete those files when the scripts are started). 
@@ -142,21 +85,10 @@ rm kill_id
 echo $ovpn_pid >> kill_id
 ```
 
-With these changes, we can make one more script which will make the appropriate changes to nginx whenever the port has been updated.
-"nginx_update.sh"
-```bash
-#!/bin/bash
-cd /home/theatre/.scripts/manual-connections
-port=$(cat port_pia)
-sed -i "s/listen .*$/listen ${port};/g" /etc/nginx/nginx.conf
-systemctl restart nginx
-```
-Again change the cd directory to match your pia cloned repo directory.
-
 # Adding Systemd scripts
 Since these scipts have to start with a bit of a time gap (as the initial vpn connection takes a bit of time so the port and session id files won't be updated yet), I have the second script start with a 30 second delay. Also a systemd target is used to "tie" these two services together. See my other guide on systemd if you need a basic intro. *Also note that all of these services will need some path updates to reflect the location of your clone pia repo*
 <a/>
-*nginx_port.target*
+"pia_port_update.target"
 ``` bash
 [Unit]
 Description=nginx pia port target
@@ -171,7 +103,7 @@ WantedBy=multi-user.target
 <a/>
 Service for starting and stopping the vpn creation and portforwarding aspect.
 <a/>
-*pia_portforward.service*
+"pia_portforward.service"
 ``` bash
 [Unit]
 Description=starts up script to start the pia plex forwarding process.
@@ -181,28 +113,28 @@ Type=simple
 User=root
 ExecStart=/home/theatre/.scripts/manual-connections/connect_vpn.sh
 ExecStop=/home/theatre/.scripts/manual-connections/connect_vpn.sh -k
-PartOf=nginx_port.target
+PartOf=pia_port_update.target
 
 [Install]
-WantedBy=nginx_port.target
+WantedBy=pia_port_update.target
 ```
 <a/>
 Service for nginx port updating.
 <a/>
-*port_update_nginx.service*
+"port_update.service"
 ``` bash
 [Unit]
-Description=updates the nginx forwarding port
+Description=runs the fix plex routing script
 
 [Service]
 Type=oneshot
 User=root
 ExecStartPre=/bin/sleep 30
-ExecStart=/home/theatre/.scripts/manual-connections/nginx_update.sh
-PartOf=nginx_port.target
+ExecStart=/home/theatre/.scripts/manual-connections/port_update.sh
+PartOf=pia_port_update.target
 
 [Install]
-WantedBy=nginx_port.target
+WantedBy=pia_port_update.target
 ```
 <a/>
 After you have created all of these scripts and placed them in the appropriate location (probably in /etc/systemd/system), you can enable them and start and stop both services with the nginx_port.target.
