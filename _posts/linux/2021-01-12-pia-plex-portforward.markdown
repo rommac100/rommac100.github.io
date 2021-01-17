@@ -13,7 +13,7 @@ post_url: /linux/2021-01-12-pia-portforward
 <a/>
  If you have all of the dependencies installed, you should encounter several prompts regarding how you want the vpn setup. 
 Enter your username and password for PIA, and then choose the options that you want out of the prompts that are given. I personally setup my with the following options: 
-<a/> Openvpn=Y <a/>  UDP=Y <a/> Strong Encryption=N <a/> Force PIA DNS=N <a/> Forwarding Port Assigned = Y <a/> Latency=50ms <a/> Disable IPv6 = Y<a/> 
+<a/> Openvpn=Y <a/>  UDP=N <a/> Strong Encryption=N <a/> Force PIA DNS=N <a/> Forwarding Port Assigned = Y <a/> Latency=50ms <a/> Disable IPv6 = Y<a/> 
 Once you have finished the prompts, a bunch of info will be spat out, the main things to note are the VPN IP address and the PIA port.
  Put this port into plex's Port Forward section, and you should be able to now access your plex server externally. *Note the port expires/ needs to be renewed every 60 days*
 
@@ -39,7 +39,7 @@ else
         export PIA_USER=xxxx
         export PIA_PASS=xxxx
         export PIA_PF=true
-        export PIA_AUTOCONNECT=openvpn_udp_standard
+        export PIA_AUTOCONNECT=openvpn_tcp_standard
         /bin/bash /home/theatre/.scripts/manual-connections/get_region_and_token.sh
 fi
 ```
