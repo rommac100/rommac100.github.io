@@ -139,10 +139,10 @@ WantedBy=pia_port_update.target
 <a/>
 After you have created all of these scripts and placed them in the appropriate location (probably in /etc/systemd/system), you can enable them and start and stop both services with the nginx_port.target.
 ``` bash
-# systemctl enable nginx_port.target
+# systemctl enable pia_port_update.target
 # systemctl enable pia_portforward.service
-# systemctl enable port_update_nginx.service
-# systemctl start nginx_port.target
+# systemctl enable port_update.service
+# systemctl start pia_port_update.target
 ``` 
 <a/>
 Now you should have a basic setup using the PIA's manual vpn connection with port forwarding. This general guide can be ported and used for various other setups.
