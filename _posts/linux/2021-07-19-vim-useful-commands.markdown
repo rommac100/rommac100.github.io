@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Useful Vim Commands"
-date:   2021-01-12
+date:   2021-07-19
 tags: [linux, computers]
 post_url: /linux/2021-07-19-useful-vim-commands
 ---
@@ -11,6 +11,10 @@ post_url: /linux/2021-07-19-useful-vim-commands
 
 # Basic Stuff
  Adding to the end of a line - Shift + A
+<a/>
+ Send cursor to previous position - CTRL + o
+<a/>
+ Scrolling up and down - CTRL + u , CTRL + d
 
 # Incrementing array indexes
  Lets say you copy a c array addressing many times and which to increment the index i.e
