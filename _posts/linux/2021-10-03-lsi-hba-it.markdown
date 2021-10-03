@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "LSI HBA card IT mode Flashing"
+date:   2021-10-03
+tags: [linux, computers, servers]
+post_url: /linux/2021-10-03-lsi-hba-it
+---
+# Summary
+ This article is more of a link dump for flashing the firmware of a LSI controller. Specifically, it mode will be flashed onto the controller given that is necessary for zfs utilization.
+
+# LSI 9211-8i
+ *notes most of the steps are probably universal for most lsi cards but I will just separate them like this in case of changes*
+More or less just check out the linked guide on it but in summary:
+ - Download the firmware for the [9211-8i](https://www.broadcom.com/support/download-search)
+	- Serach for 9211 and grab the it firmware on that download search.
+ - Copy the following files onto the root of fat32 bootable dos device
+    - sasbios_rel/mptsas2.rom
+    - Firmware/HBA_9211_8i_IT/2118.bin
+    - sas2flsh_dos_rel/sas2flsh.exe
+ - Run the following commands after booting into your usb (DO NOT REBOOT during install process)
+``` bash
+sas2flsh -o -e 6 (setting the adapter and flashing mode effectively)
+sas2flsh -o -f 2118it.bin -b mptsas2.rom (flash the firmware)
+sas2flsh -listall (verify installation was successful)
+```
+
+
+
+# Resources
+ - [9211-8i Guide](https://nguvu.org/freenas/Convert-LSI-HBA-card-to-IT-mode/)
+ - [LSI firmware download page](https://www.broadcom.com/support/download-search)
