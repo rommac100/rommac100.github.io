@@ -1,0 +1,26 @@
+---
+layout: post
+title:  "LXC Info"
+date:   2021-12-30
+tags: [linux, computers, servers]
+post_url: /linux/2021-12-30-lxc-info
+---
+# Summary
+ This article more is a info dump for stuff pertaining to lxc. Useful commands, fixes, etc will be present in the article.
+
+## Useful Commands
+### List created/active containers 
+```bash
+lxc-ls 
+``` 
+### attach/connect to a given container
+```bash
+lxc-attach (container-name)
+```
+### Create New Container
+```bash
+lxc-create -n (container-name) -t download
+```
+
+# Resources
+ - [Arch Wiki LXC Page](https://wiki.archlinux.org/title/Linux_Containers)  
