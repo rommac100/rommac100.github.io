@@ -6,7 +6,7 @@ tags: [electronics]
 ---
 # This subpage will be dedicated to everything with regards to micro-electronics. 
 
-<img src="https://www.electronics-tutorials.ws/wp-content/uploads/2018/05/waveforms-tim37.gif" width="50%" height="50%"/>
+<img src="/_images/electronics/tim555.png" width="50%" height="50%" />
 
 Recent Posts:
 {% for post in site.posts %}
