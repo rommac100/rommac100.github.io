@@ -22,4 +22,4 @@ footer: 'visit my github for various scripts and flushed out projects <a href="h
 # Build settings
 markdown: kramdown
 remote_theme: b2a3e8/jekyll-theme-console
-theme: jekyll-theme-console
+#theme: jekyll-theme-console
