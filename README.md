@@ -7,5 +7,6 @@
  Uncomment out the
  ```bash
 	#theme: jekyll-theme-console
- ``` in the _config.yml. Make sure this is commented out when pushed to the repo though otherwise github pages will refuse to run it.
+ ``` 
+in the _config.yml. Make sure this is commented out when pushed to the repo though otherwise github pages will refuse to run it.
  
