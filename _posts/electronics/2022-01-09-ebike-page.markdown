@@ -44,7 +44,3 @@ Despite the problems faced, this first version was too much fun and turned out v
 
 
 # Resources:
- - [ASRock C2750D4I Page](https://www.asrockrack.com/general/productdetail.asp?Model=C2750D4I#Manual)
- - [ASrock C2550D4I Page](https://www.asrockrack.com/general/productdetail.asp?Model=C2550D4I#Specifications)
- - [Form post on various attempts/fixes for clock decay](https://www.truenas.com/community/threads/how-to-fix-asrock-c2750d4i-with-c2000-bug.90451/)
- - [Article on the C2000 Atom Clock Decay problem](https://www.extremetech.com/computing/244074-intel-atom-c2000-bug-killing-products-multiple-manufacturers)
