@@ -43,6 +43,10 @@ min-height: 32px !important; max-height: 32px !important; margin-top: 8px !impor
 #urlbar { --urlbar-toolbar-height: 32px !important; }
 ```
 
+## DNS over HTTPS:
+ - So this a relatively new [circa 2020](https://blog.mozilla.org/en/products/firefox/firefox-continues-push-to-bring-dns-over-https-by-default-for-us-users/) roll out that I was not aware of and causes issues with local dns without proper certificates. The solution is to just disable the DNS over HTTPS option in your Network Settings of firefox. *Note have not thoroughly checked the problems that are associated performing this check*
+<img src="/_images/electronics/riscv/pwmmem.png" width="75%" height="75%"/>
+
 ## Plugins
  - [Ghostery](http://www.ghostery.com/) - nice for removing trackers and some ads
  - [Last Pass](https://lastpass.com/) - good enough password manager

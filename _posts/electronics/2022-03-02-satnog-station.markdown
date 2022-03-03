@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Satnog Satellite Ground Station"
-date:   2022-01-09 
+date:   2022-03-02 
 post_url: /electronics/satnog
 tags: [electronics]
 ---
@@ -17,6 +17,17 @@ More or less satnog is a easy to use ground station network where you put your g
 I recommend if you wish to give involved in Satnogs stuff to continue reading this article and also check out their [website](https://satnogs.org) as they have stream line the process heavily.
 <a/>
 More or less a typical satnog ground station will consist of an Antenna (either stationary or rotor based), a LNA (Low Noise Amplifier), a RTL-SDR software defined radio as the receiver and a Raspberry Pi (3 or 4) with a satnog image to act as the ground station computer.
+
+# Antenna Selection
+Since I didn't want a rotor based Antenna and need an omnidirectional radiation pattern, I decided to try using a Lindenblad antenna for the UHF band. Specifically, I utilize this [design](https://www.thingiverse.com/thing:4626749) which is a revision of a parasitic variant of the Lindenblad Antenna. The advantage of this lindenblad antenna over more traditional ones is that there is only 1 driven element and the rest are passive (read more on the original lindenblad design if desired).
+
+## Elevation Plot
+<img src="/_images/electronics/satnog/elev.png" width="50%" height="50%" />
+
+## Azimuth Plot
+<img src="/_images/electronics/satnog/azi.png" width="50%" height="50%" />
+
+With those above plots, it is quite clear that a omnidirectional radiation pattern was produce, although the elevation plot is bit gross but is still relatively sufficient and better than a simple dipole.
 
 # Resources:
  - [Satnog Website](https://satnogs.org)
