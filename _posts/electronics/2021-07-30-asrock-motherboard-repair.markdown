@@ -32,6 +32,12 @@ Note the voltage divider in this case adds about .5V which may or may be too muc
 Also note that this above circuit diagram won't look exactly like that in the actual implementation. The below circuit is closer where V1 is the PCIClk (probably an exposed pin on a header) and the V2 is an arbitrary voltage source.
 <img src="/_images/electronics/asrock_repair/sim_div_irl.png" width="70%" height="70%" />
 
+## Broken PCICLK signal without mod
+<img src="/_images/electronics/asrock_repair/nofix.png" width="70%" height="70%" />
+
+## Fixed PCICLK signal without mod
+<img src="/_images/electronics/asrock_repair/fix.png" width="70%" height="70%" />
+
 # Resources:
  - [ASRock C2750D4I Page](https://www.asrockrack.com/general/productdetail.asp?Model=C2750D4I#Manual)
  - [ASrock C2550D4I Page](https://www.asrockrack.com/general/productdetail.asp?Model=C2550D4I#Specifications)
