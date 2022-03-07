@@ -27,7 +27,20 @@ Since I didn't want a rotor based Antenna and need an omnidirectional radiation 
 ## Azimuth Plot
 <img src="/_images/electronics/satnog/azi.png" width="50%" height="50%" />
 
-With those above plots, it is quite clear that a omnidirectional radiation pattern was produce, although the elevation plot is bit gross but is still relatively sufficient and better than a simple dipole.
+With those above plots, it is quite clear that a omnidirectional radiation pattern was produced, although the elevation plot is bit gross but is still relatively sufficient and better than a simple dipole.
+
+# Deployment of the Antenna
+Since I decided to use the 3D printed variant of the parasitic Lindenblad antenna, I printed out and built a Steel Variant of it.
+## Steel Variant Antenna
+<img src="/_images/electronics/satnog/steel_lindenblad.jpg" width="50%" height="50%"/>
+This Steel Variant technically worked but was not ideal bc of the material selection (low conductivity, can rust, etc). So a second attempt at making the antenna was made using the original aluminum plans.
+
+## Aluminum Variant Antenna
+<img src="/_images/electronics/satnog/alum_lindenblad.jpg" width="50%" height="50%"/>
+Once probably tuned I managed to get the VSWR down to a max of 1.5 in the 70cm band. Not great but a lot better than before.
+
+## VSWR/Return Loss Plot over 70cm band
+<img src="/_images/electronics/satnog/vswr_alumn.png" width="50%" height="50%"/>
 
 # Resources:
  - [Satnog Website](https://satnogs.org)
