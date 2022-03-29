@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "hfss Testing"
+date:   2022-03-22
+post_url: /electronics/hfss
+tags: [electronics]
+---
+# Synopsis
+This page will document some of my experience of working with HFSS.
+
+# Background
+I work in a Cubesat Lab at ASU and am electrical engineer with an RF Focus. I was bound to eventually start using this software. So I decided to try it.
+
+# Installation
+If you are student, you can just utilize Ansys's provided free trial of it. Doesn't last terribly long but is sufficient for getting started.
+
+# Good Starting Tutorial
+HFSS is limited to antenna testing but with my focus on RF design, [Ansys's Dipole Series](https://www.youtube.com/watch?v=dUC720AJvK0) is rather useful. It goes through some helpful tips so that your model is properly parameterizd to eventually far field plots + other useful plots. 
+
+# Resources:
+ - [Student HFSS](https://www.ansys.com/academic/students/ansys-electronics-desktop-student) 
