@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "Tektronix TLA704 Repair and Upgrades"
+date:   2022-04-30
+post_url: /electronics/tla704
+tags: [electronics]
+---
+# Synopsis
+This page will document the repairs and upgrades I went through for recently acquired TLA704.
+
+# Background
+I tend to mess around with various digital circuits so I have always wanted a decent logic analyzer and I am fan of vintage electronics and their idiosyncrasies, so this seemed like a good way to resolve both. Specifically, I acquired this TLA704 for around $50 off of ebay with a couple of known issues.
+
+
+# RTC Clock Repair
+I knew immediately when I bought it that it would have an RTC failure (seller showed a picture of this) but I didn't realise the RTC was a custom IC with no replaceable battery. To resolve that issues I followed this [youtuber's guide](https://www.youtube.com/watch?v=daoxD-SS3ZU) on modding that IC to have a CMOS battery attachment. It was gross procedure but it did indeed work and fix the issue.
+
+<img src="/_images/electronics/tla704/cmos_repair.jpg" width="90%" height="90%"/>
+
+# Resources:
+ - [RTC CMOS Battery Install](https://www.youtube.com/watch?v=daoxD-SS3ZU)
