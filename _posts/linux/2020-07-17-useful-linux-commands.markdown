@@ -66,3 +66,11 @@ usb5              1d6b:0002 09 1IF  [USB 2.00,   480 Mbps,   0mA] (xhci-hcd 0000
     5-4:1.4           (IF) 08:06:50 2EPs (Bulk-Only) usb-storage host11 (sdi)
 ```
 In conjuction with lspci, it should be quite easy to move around devices in order to more easily pass devices through
+
+# Memory Cache Clearing
+ Although you shouldn't encounter this issue (probably related to a memory leak) this command is useful for clearing large memory caches. In my case I get sometimes up to 10 gigs cached up for not real apparent reason.
+
+```bash
+# sync; echo 1 > /proc/sys/vm/drop_caches
+
+```
