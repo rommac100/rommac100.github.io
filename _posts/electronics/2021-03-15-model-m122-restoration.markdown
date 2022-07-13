@@ -67,10 +67,29 @@ The installation Process of TMK's firmware is pretty straightforward
  - Compile the desired firmware (he has several folders for various older keyboards (terminal_usb is the desired one for m122 keyboards
  - Upload the outputed hex file using Teens;y firmware uploader.
 
-# Final Product:
+# Revision 07/12/22:
+Ended up swapping from TMK's firmware back to Soarers firmware due to issues with instability of TMKs. I also did try the QMK firmware but at least for my purposes Soarers is far simpler to get running and has been more stable.
+
+## Notes on Soarer Firmware Flashing
+You have to flash a precompiled hex file onto whatever compatible MCU you selected. I initally struggled to get the right command for avrdude so see the command I ended up utilizing.
+```bash
+#!/bin/bash
+# for itsybitsy
+sudo avrdude -p m32u4 -P /dev/ttyACM0 -c avr109 -U flash:w:Soarer_at2usb_v1.12_atmega32u4.hex
+```
+Note I only tested that command for an itsy bitsy but other mcus will be easier to flash such as teensy 2.0s.
+
+## Using the Soarer tools.
+You probably will encounter libusb errors. This [reddit link](https://www.reddit.com/r/linux4noobs/comments/dwt03i/missing_libusb01so4_on_manjaro_but_i_can_find_it/) talks about using the lib32 libusb package to resolve the problem (worked in my case).
+
+
+
+# Final Product - Old:
+
 
 <img src="/_images/electronics/m122/final_keyboard.jpg" height="90%" width="90%"/>
 Ultimately, this restoration was fairly simple but results were great in the end as the keyboard is in great condition. My only complaint is that I probably will have to redue the backplate rivets soon and replace with Screws but that isn't the end of the end of world (most likely will just update this article to include that update).
+
 
 # Resources:
  - [tmk](https://github.com/tmk/tmk_keyboard)
