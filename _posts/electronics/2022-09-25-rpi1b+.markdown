@@ -1,0 +1,20 @@
+---
+layout: post
+title:  "Raspberry Pi 1 B+ Repair"
+date:   2022-09-25
+post_url: /electronics/rpi1b+
+tags: [electronics]
+---
+# Synopsis
+This page will document the repairs and upgrades I went through for RPI 1 B+.
+
+# Background
+Given that RPIs are still commonly used for small projects (mostly due to a lot of support and a large community and not really for the performance of the hardware) and that they are hard to find right now, fixing a broken one in my collection is somewhat worthy.
+
+# 2022-09-05 Issues
+Right now the RPI 1 B+ in question has a 1.25 current draw with no SD card (aka not booting) and the 3.3V rail is sitting at 1.8V on L1. However, the 1V8 rail is correct directly off of L2. This makes me think that the problem is not with the PAM2306 DC-DC converter and instead something else down the chain. 
+
+
+
+# Resources:
+ - [RPI1 B+ Rough Schematic](https://datasheets.raspberrypi.com/rpi/raspberry-pi-b-plus-reduced-schematics.pdf)
