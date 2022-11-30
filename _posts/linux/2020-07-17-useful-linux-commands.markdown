@@ -72,5 +72,13 @@ In conjuction with lspci, it should be quite easy to move around devices in orde
 
 ```bash
 # sync; echo 1 > /proc/sys/vm/drop_caches
-
 ```
+
+# PDF combing
+I find that I often need to combine pdfs locally (prefer not to use online utilities due privacy concerns (receipts, invoices, etc). So a local combiner is quite useful. pdftk is used and then the following sequence ripped from a stackoverflow
+```bash
+pdftk file1.pdf file2.pdf cat output output.pdf
+```
+
+# Resources
+ - [pdf combining](https://stackoverflow.com/questions/2507766/merge-convert-multiple-pdf-files-into-one-pdf)
