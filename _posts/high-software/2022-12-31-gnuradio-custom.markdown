@@ -14,7 +14,7 @@ For my job I had to make a custom DTMF encoder using GNUradio (rather overkill b
 # DTMF Explanation
 DTMF is effectively a dual tone method of encoding symbols into frequencies albiet in the audible frequency range. It consists of high and low frequency groupings and some arbitrary amplitude difference between the two (likely in the 3 to 2dB range). By default in the more extendedDTMF encoding format a 4x4 matrix can represent all of the symbols and the needed high and low frequencies.
 ## Standard DTMF Frequency to Symbol Table
-<img src="https://andrewjprokop.files.wordpress.com/2013/09/dtmf.png" height="75%" width="75%"/>
+<img src="/_images/high-software/gnuradio/dtmf.png" height="75%" width="75%"/>
 
 For example, using that above table if I wanted to represent the symbol '1' a mixing of 697 and 1209 Hz would be needed. 
 
