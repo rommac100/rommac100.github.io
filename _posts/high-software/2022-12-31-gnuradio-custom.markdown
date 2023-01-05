@@ -88,6 +88,10 @@ if __name__ == '__main__':
 Just for reference, the above is the rough dtmf-gen embedded module. I don't necessary recommend the practices that were used when making this module but it still serves as semi usable reference
 
 
+# Some GNU radio debugging notes.
+When using OOT modules (especially while developing them) if you have any import errors for your module while in the companion app, try to impor the module separately in a normal python interactive window. This will give a lot more information on what is causing the import to fail.
+
+
 # Resources
  - [GNURadio Wiki](https://wiki.gnuradio.org/index.php/Main_Page)
  - [Python Embedded Blocks](https://wiki.gnuradio.org/index.php?title=Embedded_Python_Block)
