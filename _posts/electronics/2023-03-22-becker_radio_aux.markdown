@@ -13,7 +13,7 @@ I will assume the radio has been removed already from the car but you will see 3
 
 # Mod Summary
 Basically after searching throughout peachparts forums and other car forums I found a couple rough guides on adding aux. Most involved using some features of the tape deck (not terribly useful if your tape deck is broken) but the last post I found talked about just inserting your line level signal (3.5mm aux signal typically is this) directly to the output of a stereo decoder chip. In the guide for becker 1432 radio this IC is a TCA 4511. For the Becker 612 this IC is a [TCA4500](https://datasheetspdf.com/pdf-file/552312/ETC/TCA4500A/1). Basically just solder your aux aux cord to the pins 4,5,8 (L,R,G) and you should be good to go.
-<img src="/_images/electronics/becker/mod.png"/>
+<img src="/_images/electronics/becker/mod.jpg"/>
 
 # Current Issues
  - There is a loud poping noise that occurs when switching sources (pretty typical of sound stuff) but I am unsure of how to fix it.
