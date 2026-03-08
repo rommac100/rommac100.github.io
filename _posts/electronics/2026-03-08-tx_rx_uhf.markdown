@@ -1,0 +1,36 @@
+---
+layout: post
+title:  "Transmit Receive UHF Setup"
+date:   2026-03-08 
+post_url: /electronics/tx_rx_uhf
+tags: [electronics]
+---
+# Synopsis
+This Page summarizes the work that has been done for getting a decent SDRAngel setup for Transmit and Receive.
+
+# Background
+I have been working on a transmit receive setup for a while and finally got a decent setup working with SDRangel so it is worth documenting properly.
+
+
+# Summary of Receiver Setup
+Dual Yagi -> Hybrid Coupler -> Custom LNA (HPF->LNA-BPF->LNA-LPF) -> 50ft RG6 -> Bias-T (switchable) -> Switched Filter bank (400/430) -> fisball pluto.
+
+## Block Diagram of Setup:
+
+# Summary of Transmitter Setup
+Pluto Fishball -> 430MHz BPF -> LANA LNA (switchable) -> Custom 70cm PA -> 70ft LMR400 -> 7dB Linear Yagi.
+
+## Block Diagram of Setup:
+
+There is then a Teensy that controls the switchable nature of both the LNAs on Receive and transmit (power off the opposite one to prevent damage and also reduce spurious leakage out of the PA).
+
+
+# SDRAngel Configuration
+This part is by far where more time has been spent due to the documentation (and quite frankly my in-experience in DSP stuff) caused a lot of problems.
+
+## Picture of SDRangel Setup
+<img src="/_images/electronics/txrx_setup/sdrangel.png" width="50%" height="50%" />
+
+# Resources:
+ - [Satnogs Profile](https://network.satnogs.org/users/rommac100/)
+ - [SDRangel Github](https://github.com/f4exb/sdrangel)
